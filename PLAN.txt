@@ -1,0 +1,37 @@
+Eddie Yang Game Plan
+
+-at least one variant of Breakout that you thought was interesting and what was interesting about it:
+Vortex: I used to play it a lot on the iPod and I loved this version of the game. Instead of just moving the paddle left and right,
+the player has to move it in all directions so it is significantly more difficult.
+
+-general game mode: 
+The game will have 4 levels. The player has 3 lives to begin with. Lives get carried through into the next level.
+Power ups will drop from destroyed blocks and can be collected by the paddle. The player can have multiple power ups simultaneously. When the player loses one life, all power ups are lost. Power ups don¡¯t get carried through into the next level.
+Each level starts with the bouncer in the middle of the paddle in the bottom middle of the screen. When the player presses a key, the bouncer leaves the paddle and the level starts.
+
+-a general description of the different levels you intend to build (perhaps with "pictures" of the block configurations):
+The first three levels have all the blocks at the top of the screen. The blocks are 20*50 in size, so it takes 8 blocks to form a row that spans from the very left of the screen to the right.
+The first level is plain and simple: all blocks (32 blocks in a 4 row * 8 column configuration) take one hit to destroy;
+The second level has 48 blocks in a 6 row * 8 column configuration and the blocks in the top two rows take one hit to destroy, those in the 3rd and 4th row take 2 hits, and those in the bottom two rows take 3 hits.
+The third level has 44 blocks. Top two rows have 8 2-hit blocks each. The next three rows have 8 3-hit blocks each. On the bottom row, there will be 2 blocks at the very left and 2 blocks at the very right, and these 4 blocks cannot be destroyed.
+
+The fourth level is a special one with the game mode of ¡°Vortex¡± and all the blocks will be in the middle of the screen. The blocks will be squares (20*20) instead. There will be 36 blocks in a 6 row * 9 column configuration. The 20 blocks in the outer layer are 3-hit blocks; the 12 blocks in the middle layer are 2-hit blocks; and the 4 blocks in the inner layer are 1-hit blocks.
+When the paddle reaches the edge of the screen it moves to that edge and rotates direction.
+
+-several different blocks you want to create:
+As stated above, there are four kinds of blocks: 1-hit, 2-hit, 3-hit, and non-destroyable.
+The first three kinds of blocks all have some chance (same for all three) of dropping power ups upon being destroyed.
+
+-several different power ups you want to create: 
+1: multiple balls: the bouncer splits into 3 bouncers moving in random directions. All three bouncers are exactly the same, so the player practically has three chances before losing a life. This power up has no time limit.
+2: bigger paddle: the paddle becomes 1.5 times as big. This power up lasts a certain amount of time.
+3: flying paddle: instead of just moving the paddle left and right, the player can now move the paddle up and down too! This power up lasts a certain amount of time.
+4: one extra life. The max is still three.
+
+-several different cheat keys you are planning to include:
+1: clear the current level
+2: remove max life restriction and get 5 more lives
+3: randomly destroy 5 blocks.
+
+-something extra you intend to add and why you think it is a substantial addition:
+As stated in the level description part: there is a special fourth level with the Vortex variation. This is a substantial addition because the blocks are in different position, the paddle moves differently, and the bouncer can go off screen in any direction.
