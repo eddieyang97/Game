@@ -3,7 +3,6 @@ package game_zy53;
 import javafx.scene.image.ImageView;
 
 public class Bouncer {
-	private static int count;
 	private double SpeedX;
 	private double SpeedY;
 	private ImageView image;
@@ -12,11 +11,6 @@ public class Bouncer {
 		SpeedX = speedX;
 		SpeedY = speedY;
 		this.image = image;
-		count++;
-	}
-
-	public static int getCount() {
-		return count;
 	}
 
 	public double getSpeedX() {
