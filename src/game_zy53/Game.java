@@ -48,9 +48,11 @@ public class Game extends Application {
     private boolean start = false;
     private int level;
     private int life;
+    private int score;
     private int maxLife = 3;
     private int powerUpDuration = 0;
     private Group root;
+    private Label showScore = new Label("Score: " + score);
     private Label showLevel = new Label("Level: " + level);
     private Label showLife = new Label("Life: " + life);
     private Label showPow = new Label("PowerUpDuration: " + powerUpDuration/60);
@@ -85,6 +87,7 @@ public class Game extends Application {
         Scene scene = new Scene(root, width, height, background);
     	life = 3;
         level = 1;
+        score = 0;
         setupWelcome();
         setupPaddle();
         setupBouncer();
@@ -117,6 +120,9 @@ public class Game extends Application {
         showLife.setLayoutX(10);
         showLife.setLayoutY(380);
         root.getChildren().add(showLife);
+    	showScore.setLayoutX(345);
+    	showScore.setLayoutY(360);
+        root.getChildren().add(showScore);
         showPow.setLayoutX(280);
         showPow.setLayoutY(380);
         root.getChildren().add(showPow);
@@ -205,7 +211,7 @@ public class Game extends Application {
     	else {
     		updatePaddle();
     		updatePowerDrops(elapsedTime);
-        	updateLabel();
+        	updateLabels();
         	updateBouncers();
         	updatePosition(elapsedTime);
     	}
@@ -227,9 +233,11 @@ public class Game extends Application {
         endLabel.setLayoutX(125);
         endLabel.setLayoutY(150);
         root.getChildren().add(endLabel);
+        finalScore();
     }
     
 	private void levelup() {
+		score += life * 30;
 		if(level == 3)
 			clearAll();
 		if(level < 5)
@@ -255,6 +263,18 @@ public class Game extends Application {
         endLabel.setLayoutX(120);
         endLabel.setLayoutY(150);
         root.getChildren().add(endLabel);
+        finalScore();
+    }
+    
+    private void finalScore() {
+    	Label endLabel2 = new Label("Your Score: " + score);
+        endLabel2.setFont(new Font("Arial", 30));
+        if(score > 99)
+        	endLabel2.setLayoutX(90);
+        else
+        	endLabel2.setLayoutX(100);
+        endLabel2.setLayoutY(180);
+        root.getChildren().add(endLabel2);
     }
     
 	private void clearPowerDrops() {
@@ -291,6 +311,7 @@ public class Game extends Application {
 					powerUpDuration += 900;
 				}
 				else	extraLife();
+				score += 30;
 				root.getChildren().remove(powerDrops.get(i).getImage());
 				powerDrops.remove(i);
 			}
@@ -328,9 +349,10 @@ public class Game extends Application {
 			powerUpDuration--;
 	}
 	
-	private void updateLabel() {
+	private void updateLabels() {
 		showLevel.setText("Level: " + level);
 		showLife.setText("Life: " + life);
+		showScore.setText("Score: " + score);
 		showPow.setText("PowerUpDuration: " + powerUpDuration/60);
 	}
 	
@@ -339,6 +361,7 @@ public class Game extends Application {
     		dropPowerUp(block);
 			root.getChildren().remove(block.getRec());
 			blocks.remove(block);
+			score += 20;
     	}
     	else
     		block.setHit(block.getHit() - 1);
