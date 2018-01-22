@@ -137,7 +137,7 @@ public class Game extends Application {
 		}
 		else {
 	    	myBouncers.get(0).setSpeedX((Math.random() * 100 + BOUNCERSPEED) * (-1 + (int)(2*Math.random())*2));
-	    	myBouncers.get(0).setSpeedY(-BOUNCERSPEED - Math.random() * 50);
+	    	myBouncers.get(0).setSpeedY(-BOUNCERSPEED + Math.random() * 50);
 		}
 	}
 	
@@ -198,7 +198,7 @@ public class Game extends Application {
     	}
     	else if(level == 5)
     		win();
-    	else if(blocks.size() == 0)
+    	else if(blocks.size() == 0 || level == 3 && blocks.size() <= 4)
     		levelup();
     	else if(life == 0)
     		loss();
@@ -230,6 +230,8 @@ public class Game extends Application {
     }
     
 	private void levelup() {
+		if(level == 3)
+			clearAll();
 		if(level < 5)
 			level++;
 		while(myBouncers.size() != 0) {
