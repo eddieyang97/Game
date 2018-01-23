@@ -46,11 +46,13 @@ public class Game extends Application {
     public static final double POWERDROPSPEED = 60;
     public static final double BOUNCERSPEED = 100;
     private boolean start = false;
+    private int time;
     private int level;
     private int life;
     private int score;
     private int maxLife = 3;
     private int powerUpDuration = 0;
+    private int prevCollisionTime;
     private Group root;
     private Label showScore = new Label("Score: " + score);
     private Label showLevel = new Label("Level: " + level);
@@ -85,9 +87,11 @@ public class Game extends Application {
     private Scene setupGame (int width, int height, Paint background) {
         root = new Group();
         Scene scene = new Scene(root, width, height, background);
-    	life = 3;
+    	life = maxLife;
         level = 1;
         score = 0;
+        time = 0;
+        prevCollisionTime = 0;
         setupWelcome();
         setupPaddle();
         setupBouncer();
@@ -120,7 +124,7 @@ public class Game extends Application {
         showLife.setLayoutX(10);
         showLife.setLayoutY(380);
         root.getChildren().add(showLife);
-    	showScore.setLayoutX(345);
+    	showScore.setLayoutX(330);
     	showScore.setLayoutY(360);
         root.getChildren().add(showScore);
         showPow.setLayoutX(280);
@@ -199,6 +203,7 @@ public class Game extends Application {
     
     // Change properties of shapes to animate them 
     private void step (double elapsedTime) {
+    	time++;
     	if(life > 0 && myBouncers.size() == 0) {
     		reset();
     	}
@@ -387,6 +392,7 @@ public class Game extends Application {
     		updateSpeedX(myBouncers.get(i));
         	for(int j = 0; j < blocks.size(); j ++) {
         		if(blocks.get(j).getBoundsInParent().intersects(myBouncers.get(i).getImage().getBoundsInParent())) {
+        			prevCollisionTime = time;
         			if(Math.abs(blocks.get(j).getBoundsInParent().getMaxX() - myBouncers.get(i).getImage().getBoundsInParent().getMinX()) <= BOUNCERSPEED/80 ||
         					Math.abs(blocks.get(j).getBoundsInParent().getMinX() - myBouncers.get(i).getImage().getBoundsInParent().getMaxX()) <= BOUNCERSPEED/80)
         				myBouncers.get(i).setSpeedX(-myBouncers.get(i).getSpeedX());
@@ -422,6 +428,16 @@ public class Game extends Application {
     		bouncer.setSpeedX(Math.abs(bouncer.getSpeedX()));
     }
 
+    private void moverUp() {
+    	MOVER_BOT = true;
+    	myMover.setY(SIZE - myMover.getHeight());
+    }
+    
+    private void moverDown() {
+    	MOVER_BOT = false;
+    	myMover.setY(0);
+    }
+    
     //cheats
     private void clearAll() {
     	for(int i = blocks.size() - 1; i >= 0; i--) {
@@ -461,14 +477,8 @@ public class Game extends Application {
     	else {
 		    if (code == KeyCode.UP && myBouncers.get(0).getSpeedX() == 0)	startBouncer();
 		    else if (code == KeyCode.RIGHT && myMover.getX() < SIZE - myMover.getWidth())	myMover.setX(myMover.getX() + MOVER_SPEED);
-		    else if (code == KeyCode.DOWN && level == 4 && !MOVER_BOT) {
-		    	MOVER_BOT = true;
-		    	myMover.setY(SIZE - myMover.getHeight());
-		    }
-		    else if (code == KeyCode.UP && level == 4 && MOVER_BOT) {
-		    	MOVER_BOT = false;
-		    	myMover.setY(0);
-		    }
+		    else if (code == KeyCode.DOWN && level == 4 && !MOVER_BOT)	moverUp();
+		    else if (code == KeyCode.UP && level == 4 && MOVER_BOT)	moverDown();
 		    else if (code == KeyCode.LEFT && myMover.getX() > 0)	myMover.setX(myMover.getX() - MOVER_SPEED);
 	        else if (code == KeyCode.DIGIT1)	clearAll();
 	        else if (code == KeyCode.DIGIT2)	lifeCheat();
